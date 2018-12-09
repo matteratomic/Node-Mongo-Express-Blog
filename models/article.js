@@ -5,6 +5,10 @@ const articleSchema = new mongoose.Schema({
   description: { type: String,required:true},
   featuredImage: { type: String,default:''},
   text: { type: String,default:''},
+  publishedDate:{
+    type:Date,
+    default:new Date().toDateString()
+  },
   author: {
     ref: 'User',
     type: mongoose.Schema.Types.ObjectId

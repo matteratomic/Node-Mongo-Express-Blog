@@ -2,7 +2,7 @@ const router = require('express').Router()
 const userCtrl = require('../../controllers/userCtrl')
 
 router.get('/', (req, res) => {
-  res.render('index')
+  res.render('index',{ page: 'home' })
 })
 
 router.post('/login',userCtrl.authenticateUser,(req,res) => {
