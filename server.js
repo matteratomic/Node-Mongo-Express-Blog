@@ -13,6 +13,7 @@ const cors = require('cors')
 const helmet = require('helmet')
 const morgan = require('morgan')
 
+const helpers = require('./views/helpers/index')
 const port = parseInt(process.env.PORT, 10) || 3000
 const mongoURL = 'mongodb://localhost:27017/blog-api'
 
@@ -20,7 +21,8 @@ const mongoURL = 'mongodb://localhost:27017/blog-api'
 app.engine('html', expressHbs({
   defaultLayout: 'layout',
   extname: 'html',
-  partials: 'partials'
+  partials:'partials',
+  helpers
 }))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'html')

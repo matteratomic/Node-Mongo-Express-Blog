@@ -1,0 +1,94 @@
+/* ===================================================================
+ * fonts.scss)
+ *
+ * ------------------------------------------------------------------- */
+
+
+/*
+ * Permanent Marker
+================================================================================ */
+@font-face {
+	font-family: "marker";
+	src: url("http://localhost:3000/fonts/permanent-marker/permanent-marker-regular.ttf") format("ttf"), url("http://localhost:3000/fonts/permanent-marker/permanent-marker-regular.ttf") format("ttf");
+	font-style: normal;	
+	font-weight: normal;
+}
+
+
+/*
+ * Roboto
+================================================================================ */
+@font-face {
+	font-family: "roboto-light";
+	src: url("http://localhost:3000/fonts/roboto/roboto-light-webfont.woff2") format("woff2"), url("http://localhost:3000/fonts/roboto/roboto-light-webfont.woff") format("woff");
+	font-style: normal;	font-weight: normal;
+}
+
+@font-face {
+	font-family: "roboto-regular";
+	src: url("http://localhost:3000/fonts/roboto/roboto-regular-webfont.woff2") format("woff2"), url("http://localhost:3000/fonts/roboto/roboto-regular-webfont.woff") format("woff");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "roboto-italic";
+	src: url("http://localhost:3000/fonts/roboto/roboto-italic-webfont.woff2") format("woff2"), url("http://localhost:3000/fonts/roboto/roboto-italic-webfont.woff") format("woff");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "roboto-medium";
+	src: url("http://localhost:3000/fonts/roboto/roboto-medium-webfont.woff2") format("woff2"), url("http://localhost:3000/fonts/roboto/roboto-medium-webfont.woff") format("woff");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "roboto-bold";
+	src: url("http://localhost:3000/fonts/roboto/roboto-bold-webfont.woff2") format("woff2"), url("http://localhost:3000/fonts/roboto/roboto-bold-webfont.woff") format("woff");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "roboto-black";
+	src: url("http://localhost:3000/fonts/roboto/roboto-black-webfont.woff2") format("woff2"), url("http://localhost:3000/fonts/roboto/roboto-black-webfont.woff") format("woff");
+	font-style: normal;
+	font-weight: normal;
+}
+
+/*
+ * Montserrat
+================================================================================ */
+@font-face {
+	font-family: "montserrat-regular";
+	src: url("http://localhost:3000/fonts/montserrat/montserrat-regular-webfont.woff2") format("woff2"), url("http://localhost:3000/fonts/montserrat/montserrat-regular-webfont.woff") format("woff");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "montserrat-bold";
+	src: url("http://localhost:3000/fonts/montserrat/montserrat-bold-webfont.woff2") format("woff2"), url("http://localhost:3000/fonts/montserrat/montserrat-bold-webfont.woff") format("woff");
+	font-style: normal;
+	font-weight: normal;
+}
+
+/*
+ * Muli
+================================================================================ */
+@font-face {
+	font-family: "muli-regular";
+	src: url("http://localhost:3000/fonts/muli/muli-regular-webfont.woff2") format("woff2"), url("http://localhost:3000/fonts/muli/muli-regular-webfont.woff") format("woff");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "muli-light";
+	src: url("http://localhost:3000/fonts/muli/muli-light-webfont.woff2") format("woff2"), url("http://localhost:3000/fonts/muli/muli-light-webfont.woff") format("woff");
+	font-style: normal;
+	font-weight: normal;
+}

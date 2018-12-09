@@ -16,7 +16,8 @@ const articleSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }
-  }]
+  }],
+  category:[{type:String,enum:['Lifestyle','Health','News','Other']}]
 })
 
 articleSchema.methods.addComment = function (comment) {
