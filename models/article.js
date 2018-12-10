@@ -1,10 +1,32 @@
 const mongoose = require('mongoose')
 
 const articleSchema = new mongoose.Schema({
-  title: { type: String,required:true},
+  title: { type: String,required:true,unique:true},
   description: { type: String,required:true},
-  featuredImage: { type: String,default:''},
+  featuredImage: { 
+    type: String,
+    default:null,
+    required:function(){
+      return this.type === 'standard-post'
+    }
+  },
+  featuredVideo:{
+    type:String,default:null,
+    required:function(){
+      return this.type === 'video-post'
+    }},
+  featuredGalleryImages:{
+    type:Array,
+    default:null,
+    required:function(){
+      return this.type === 'gallery-post'
+    }
+  },
   text: { type: String,default:''},
+  type:{
+    type:String,
+    enum:['video-post','standard-post','gallery-post']
+  },
   publishedDate:{
     type:Date,
     default:new Date().toDateString()

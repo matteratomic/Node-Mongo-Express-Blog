@@ -1,22 +1,25 @@
 <article class="brick entry format-video animate-this">
+<!--  -->
 
         <div class="entry-thumb video-image">
-           <a href="http://player.vimeo.com/video/14592941?title=0&amp;byline=0&amp;portrait=0&amp;color=F64B39" data-lity>
+           <a href="{{video}}" data-lity style="position:relative">
+                <ion-icon style="font-size:65px;position:absolute;top:50%;left:50%;color:white;transform:translate(-50%,-50%)" name="play"></ion-icon>
                <img src="images/thumbs/ottawa-bokeh.jpg" alt="bokeh">                   
            </a>
         </div>
 
-        <div class="entry-text">
+        <div style="box-shadow:0 0 5px black" class="entry-text">
             <div class="entry-header">
 
                 <div class="entry-meta">
                     <span class="cat-links">
-                        <a href="#">Design</a> 
-                        <a href="#">Branding</a>               			
+                            {{#each tags}}
+                            <a href="#">{{this}}</a>  
+                            {{/each}}
                     </span>			
                 </div>
 
-                <h1 class="entry-title"><a href="single-video">This Is a Video Post Format.</a></h1>
+                <h1 class="entry-title"><a href="single-video">{{title}}</a></h1>
                 
             </div>
                  <div class="entry-excerpt">

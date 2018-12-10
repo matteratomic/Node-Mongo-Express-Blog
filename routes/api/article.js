@@ -6,6 +6,8 @@ module.exports = router => {
   router.get('/articles', articleCtrl.getAllArticles)
   //Route to add an article
   router.post('/article', articleCtrl.addArticle)
+  //Route to add an article
+  router.get('/article/:title', articleCtrl.getArticle)
   //Route to comment delete an article
   router.get('/article/delete/:id', articleCtrl.deleteArticle)
   //Route to comment delete all articles

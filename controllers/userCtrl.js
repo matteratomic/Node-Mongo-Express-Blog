@@ -2,6 +2,8 @@
 const User = require('../models/user')
 const Article = require('../models/user')
 const bcrypt = require('bcrypt')
+const cloudinary = require('cloudinary')
+
 
 module.exports = {
 	addUser: (req,res,next) => {
@@ -10,6 +12,7 @@ module.exports = {
 				if(user){
 					res.send('That username has already been taken')
 				}else{
+					
 					saveUser({...req.body},res)
 				}
 		})	
@@ -76,5 +79,16 @@ module.exports = {
 			if(err) throw err
 				res.status(400).json({articles})
 		})
+	},
+	deleteArticles:(req,res,next) => {
+		User.find({articles:req.params.id},(err,user)=>{
+			if(err) throw err
+			user.removeArticle(req.params.id)
+				.then(()=>{
+
+				}).catch((err)=>{
+
+				})
+		})
 	}
-	}
+}

@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const cloudinary = require('cloudinary')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const app = express()
@@ -11,11 +12,19 @@ const apiRouter = require('./routes/api/index')
 const viewRoutes = require('./routes/views/index')
 const cors = require('cors')
 const helmet = require('helmet')
-const morgan = require('morgan')
+const logger = require('morgan')
+require('dotenv').config()
 
 const helpers = require('./views/helpers/index')
 const port = parseInt(process.env.PORT, 10) || 3000
 const mongoURL = 'mongodb://localhost:27017/blog-api'
+
+//setup cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // setup view engine
 app.engine('html', expressHbs({
@@ -27,7 +36,7 @@ app.engine('html', expressHbs({
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'html')
 
-//setup DATABASE
+//setup mongoDB 
 mongoose.Promise = global.Promise
 mongoose.connect(mongoURL,{useNewUrlParser:true})
 const db = mongoose.connection
@@ -49,7 +58,7 @@ app.use(session({
 }))
 app.use(cors())
 app.use(helmet())
-app.use(morgan('dev'))
+app.use(logger('dev'))
 app.use('/api', apiRouter)
 app.use('/', viewRoutes)
 app.listen(port, () => console.log(`Listening on port ${port}`))

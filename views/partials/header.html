@@ -9,8 +9,32 @@
             <div class="logo">
               <a href="/">Author</a>
            </div>
-           <div style="position:absolute;top:10px;left:120px;" class="site-title">
-               <h3 style="font-size:35px;font-family:'Permanent Marker',sans-serif!important">The Blog</h3>
+
+           <style>
+               .blog-title-div{
+                position:absolute;
+                top:10px;
+                left:120px;
+               }
+               .blog-title-h3{
+                color: white;
+                font-size:35px;
+                font-family:'Permanent Marker',sans-serif
+               }
+               @media screen and (max-width:768px){
+                .blog-title-div{
+                position:absolute;
+                top:10px;
+                left:100px;
+               }
+                .blog-title-h3{
+                font-size:30px;
+                font-family:'Permanent Marker',sans-serif;
+               }
+               }
+           </style>
+           <div  class="blog-title-div">
+               <h3 class="blog-title-h3">Avante</h3>
            </div>
  
             <nav id="main-nav-wrap">
@@ -25,15 +49,6 @@
                          <li><a href="category">UI</a></li>
                          <li><a href="category">Mockups</a></li>
                          <li><a href="category">Branding</a></li>
-                      </ul>
-                     </li>
-                     <li class="{{# ifeq page 'blog'}}current{{/ifeq}}" class="has-children">
-                         <a class="{{# ifeq page 'blog'}}current{{/ifeq}}" href="single-standard" title="">Blog</a>
-                         <ul class="sub-menu">
-                         <li><a href="single-video">Video Post</a></li>
-                         <li><a href="single-audio">Audio Post</a></li>
-                         <li><a href="single-gallery">Gallery Post</a></li>
-                         <li><a href="single-standard">Standard Post</a></li>
                       </ul>
                      </li>
                      <li class="{{# ifeq page 'about'}}current{{/ifeq}}"><a href="about" title="">About</a></li>	

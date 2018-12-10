@@ -69,7 +69,6 @@ body {
 }
 
 body {
-	background: #f5f5f5;
 	font-family: "roboto-regular", sans-serif;
 	font-size: 1.7rem;
 	line-height: 3rem;
@@ -1533,21 +1532,6 @@ input::-moz-focus-inner {
 	vertical-align: bottom;
 }
 
-.format-video .entry-thumb a::before {
-	content: "\e998";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	font-family: "icomoon";
-	font-size: 8rem;
-	border-radius: 50%;
-	color: white;
-	-webkit-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-	cursor: zoom-in;
-}
-
 
 /* ===================================================================
  *  09. header styles - (_layout.scss)
@@ -1559,12 +1543,10 @@ header {
 	left:0;
 	z-index:1000;
 	width: 100%;
-	background: #DBDBDB url(/images/escheresque_@2X.png) repeat;
-	background:white;
+	background:transparent;
 	background-size: 46px 29px;
 	height: 120px;
-	border-bottom: 1px solid #E5E5E5;
-	box-shadow:0 0 10px black;
+	transition:all 1s;
 }
 header .header-content {
 	height: auto;
@@ -1576,12 +1558,22 @@ header .header-content {
 	width: 100%;
 }
 header a {
+	color:white!important;
 	border: none;
 }
+
+.header-visible{
+	background-color:black;
+}
+
 
 @media only screen and (max-width:400px) {
 	header {
 		height: 118px;
+	}
+	header a {
+		color:black!important;
+		border: none;
 	}
 
 }
@@ -1668,7 +1660,7 @@ header .logo a {
 .triggers .search-trigger {
 	display: inline-block;
 	font-size: 17px;
-	color: #000000;
+	color: white!important;
 }
 
 .triggers .menu-toggle {
@@ -1746,7 +1738,7 @@ header .logo a {
 }
 
 .main-navigation li.current > a {
-	border-bottom: 2px solid #151515;
+	border-bottom: 2px solid white;
 	color: #000000;
 	font-family: "montserrat-bold", sans-serif;
 }
@@ -1756,7 +1748,7 @@ header .logo a {
 	top: 100%;
 	left: 0;
 	margin: 0;
-	background: #f4f4f4;
+	background: white;
 	border-radius: 0 0 3px 3px;
 	font-size: 11px;
 	z-index: 500;
@@ -1793,7 +1785,7 @@ header .logo a {
 	font-size: 14px;
 	line-height: 15px;
 	display: block;
-	color: #8E8E8E;
+	color: black!important;
 }
 
 .main-navigation ul li a:hover {
@@ -1858,7 +1850,7 @@ header .logo a {
 		top: 50%;
 		bottom: auto;
 		left: auto;
-		background-color: black;
+		background-color: white;
 		-moz-transition: background 0.2s ease-in-out;
 		-o-transition: background 0.2s ease-in-out;
 		-webkit-transition: background 0.2s ease-in-out;
