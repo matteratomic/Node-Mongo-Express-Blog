@@ -1545,7 +1545,7 @@ header {
 	width: 100%;
 	background:transparent;
 	background-size: 46px 29px;
-	height: 120px;
+	height: 110px;
 	transition:all 1s;
 }
 header .header-content {
@@ -1560,6 +1560,9 @@ header .header-content {
 header a {
 	color:white!important;
 	border: none;
+}
+header a:hover{
+	color:pink!important;
 }
 
 .header-visible{
@@ -1725,7 +1728,7 @@ header .logo a {
 .main-navigation li a {
 	display: block;
 	padding-bottom: 9px;
-	color: #898989;
+	color: black;
 	border: none;
 }
 
@@ -1790,7 +1793,7 @@ header .logo a {
 
 .main-navigation ul li a:hover {
 	background: transparent;
-	color: #000000;
+	
 }
 
 .main-navigation ul li:hover > ul,
@@ -1953,7 +1956,7 @@ header .logo a {
 	.main-navigation li a {
 		display: block;
 		width: auto;
-		color: #848484;
+		color: black!important;
 		padding: 18px 0;
 		line-height: 24px;
 		border: none;

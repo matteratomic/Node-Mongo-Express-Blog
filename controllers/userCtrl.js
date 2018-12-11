@@ -30,15 +30,21 @@ module.exports = {
 		.populate('articles')
 		.exec((err,users)=>{
 			if (err) throw err
+			if(req.query.json){
 				res.status(200).json(users)
+			}
+			next()
 		})
 	},
 	getUser:(req,res,next) => {
-		User.find({name:req.params.name})
+		User.findOne({name:req.params.name})
 		.populate('articles')
 		.exec((err,user)=>{
 			if(err) throw err
-				res.status(400).json({user})
+			if(req.query.json){
+				res.status(200).json({user})
+			}
+			next()
 		})
 	},
 	authenticateUser:(req,res,next) => {
@@ -50,14 +56,16 @@ module.exports = {
 						res.status(500).send('Internal server error')
 					}
 					if(result){
-						req.session.user = user
+						req.flash('login-message','You are now logged in')
+						req.session.user = {name:user.name,_id:user._id}
 						next()
 					}else{
 						res.send('The username or password provided is incorrect')
 					}
 				  })
 			}else{
-				res.send('The username or password provided is incorrect')
+				req.flash('login-message','The username or password provided is incorrect')
+				next()
 			}
 		})
 	},
@@ -68,7 +76,7 @@ module.exports = {
 				if(err){
 					res.status(404).json({error:err})
 				}
-				res.status(400).json({message:'User account has been deleted'})
+				res.status(200).json({message:'User account has been deleted'})
 			})
 		})
 	},
@@ -77,7 +85,10 @@ module.exports = {
 		.populate('articles')
 		.exec((err,articles) => {
 			if(err) throw err
-				res.status(400).json({articles})
+			if(req.query.json){
+				res.status(200).json({articles})
+			}
+			next()
 		})
 	},
 	deleteArticles:(req,res,next) => {
@@ -85,9 +96,9 @@ module.exports = {
 			if(err) throw err
 			user.removeArticle(req.params.id)
 				.then(()=>{
-
+					res.status(200).send('Article has been deleted')
 				}).catch((err)=>{
-
+					res.status(500).send('Internal server error')
 				})
 		})
 	}

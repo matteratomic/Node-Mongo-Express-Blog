@@ -9,11 +9,12 @@ router.get('/',articleCtrl.getPaginatedArticles,(req, res) => {
      page: 'home',
      currentPage:req.query.page || 1,
      posts:res.locals.posts,
+     loginMessage:req.flash('login-message') || null,
      tags:['Lifestyle','Health']})
 })
 
 router.post('/login',userCtrl.authenticateUser,(req,res) => {
-    res.send('Logged in')
+    res.redirect('/')
 })
 
 router.get('/logout',(req,res) => {

@@ -1,6 +1,13 @@
 <!-- masonry
    ================================================== -->
+	{{#ifeq currentPage 1}}
    {{> hero-partial}}
+   {{/ifeq}}
+
+   <!-- <div style="margin:100px 0 0 60px;">
+	   <h1 style="font-size:35px;font-family:'Permanent Marker',sans-serif">My Posts</h1>
+   </div> -->
+   
    <section id="bricks">
 
    	<div class="row masonry">
@@ -23,7 +30,7 @@
 									imageUrl="images/thumbs/featured/featured-2.jpg" 
 									author="Danielle Arori"
 									publishDate="January 10, 2019"
-									title="Let's talk about vaginas"
+									title="Let's talk about cars"
 							}}   
 							
 							  {{> featured-post-slide 
@@ -37,7 +44,7 @@
 				   	</div> <!-- end featured-post-slider -->        			
          		</div> <!-- end entry content -->         		
 			 </div>
-			 
+			 {{> loader}}
 			 {{# each posts}}
 				{{> article-brick 
 					imageUrl=featuredImage
@@ -61,8 +68,8 @@
    	<div class="row">
 
    		<nav class="pagination">
-		      <a style="{{# ifeq '1' currentPage}}pointer-events: none {{/ifeq}}" href="/?page={{minusOne currentPage}}" class="page-numbers prev {{# ifeq currentPage '1'}}inactive{{/ifeq}}">Prev</a>
-		   	<a href="/?page=1" class="page-numbers">1</a>
+		      <a style="{{# ifeq '1' currentPage}}pointer-events: none {{/ifeq}}" href="{{# ifeq currentPage '2'}} / {{else}} /?page={{minusOne currentPage}} {{/ifeq}}" class="page-numbers prev {{# ifeq currentPage '1'}}inactive{{/ifeq}}">Prev</a>
+		   	<a href="/"  class="page-numbers {{# ifeq currentPage 1}}current{{/ifeq}}">1</a>
 		   	<a href="/?page=2" class="page-numbers {{# ifeq currentPage '2'}}current{{/ifeq}}">2</a>
 			  <a href="/?page=3" class="page-numbers {{# ifeq currentPage '3'}}current{{/ifeq}}">3</a>
 		      <a href="/?page=4" class="page-numbers {{# ifeq currentPage '4'}}current{{/ifeq}}">4</a>

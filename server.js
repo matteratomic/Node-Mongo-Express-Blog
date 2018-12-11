@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const flash = require('connect-flash')
 const cloudinary = require('cloudinary')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
@@ -51,11 +52,15 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cookieParser())
 app.use(session({
+  cookie:{
+    maxAge:1.296*10**6
+  },
   secret:'THIS IS A SECRET',
   resave:true,
   saveUninitialized:false,
   store: new MongoStore({mongooseConnection:db})
 }))
+app.use(flash())
 app.use(cors())
 app.use(helmet())
 app.use(logger('dev'))
