@@ -10,19 +10,19 @@ router.get('/',articleCtrl.getPaginatedArticles,(req, res) => {
      currentPage:req.query.page || 1,
      posts:res.locals.posts,
      loginMessage:req.flash('login-message') || null,
-     tags:['Lifestyle','Health']})
+     logoutMessage:req.flash('logout-message') || null,
+     isLoggedIn:typeof req.session.user !== 'undefined',
+     user:req.session.user || null,})
 })
 
 router.post('/login',userCtrl.authenticateUser,(req,res) => {
-    res.redirect('/')
+    res.status(302).json({message:'Login successful'})
 })
 
 router.get('/logout',(req,res) => {
   if(req.session.user){
     req.session.destroy((err)=>{
       if(err) res.status(500).send('Internal server error')
-      // use connect-flash
-      console.log('user logged out')
       res.redirect('/')
     })
   }else{
@@ -32,8 +32,28 @@ router.get('/logout',(req,res) => {
   
 })
 
+router.get('/dashboard',userCtrl.verifyIsAdmin,userCtrl.getUserArticles,(req,res) => {
+  res.render('dashboard-articles',{
+    layout:'dashboard.html',
+    posts:res.locals.posts[0].articles,
+    user:req.session.user || null,
+  })
+})
+
+router.get('/dashboard/editor',userCtrl.verifyIsAdmin,(req,res) => {
+  res.render('editor',{
+    layout:'dashboard.html',
+    user:req.session.user || null,
+  })
+})
+
+
 router.get('/category', (req, res) => {
-  res.render('category', { page: 'category' });
+  res.render('category', { 
+    page: 'category',
+    isLoggedIn:typeof req.session.user !== 'undefined',
+    user:req.session.user || null,
+   });
 });
 
 // blog pages
@@ -58,22 +78,34 @@ router.get('/post',articleCtrl.getArticle,(req, res) => {
 
 
 router.get('/single-audio', (req, res) => {
-  res.render('single-audio', { page: 'blog' });
+  res.render('single-audio', { 
+    page: 'blog',
+    isLoggedIn:typeof req.session.user !== 'undefined',
+    user:req.session.user || null,});
 });
 
 router.get('/single-gallery', (req, res) => {
-  res.render('single-gallery', { page: 'blog' });
+  res.render('single-gallery', {
+    isLoggedIn:typeof req.session.user !== 'undefined',
+    user:req.session.user || null,});
 });
 
 // end of blog pages
 
 
 router.get('/about', (req, res) => {
-  res.render('about', { page: 'about' });
+  res.render('about', { 
+    page: 'about',
+    isLoggedIn:typeof req.session.user !== 'undefined',
+    user:req.session.user || null});
 });
 
 router.get('/contact', (req, res) => {
-  res.render('contact', { page: 'contact' });
+  res.render('contact', { 
+    page: 'contact',
+    isLoggedIn:typeof req.session.user !== 'undefined',
+    user:req.session.user || null,
+  });
 });
 
 

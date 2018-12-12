@@ -80,7 +80,6 @@ body {
  * ------------------------------------------------------------------- */
 a,
 a:visited {
-	color: #1237B1;
 	border-bottom: 1px solid transparent;
 	-moz-transition: all 0.4s ease-in-out;
 	-o-transition: all 0.4s ease-in-out;
@@ -1562,7 +1561,7 @@ header a {
 	border: none;
 }
 header a:hover{
-	color:pink!important;
+	color:rgb(255, 0, 140)!important;
 }
 
 .header-visible{
@@ -1607,11 +1606,13 @@ header .logo a {
 	padding: 0;
 	outline: 0;
 	border: none;
-	width: 60px;
-	height: 60px;
-	background: url("/images/logo.png") no-repeat center;
-	background-size: 60px 60px;
+	width: 50px;
+	height:55px;
+	background: url("/images/blog-logo-light.png") no-repeat center;
+	background-size:contain;
 	font: 0/0 a;
+	background-position:center;
+	background-repeat:no-repeat;
 	text-shadow: none;
 	color: transparent;
 	-moz-transition: all 0.5s ease-in-out;

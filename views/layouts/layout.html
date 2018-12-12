@@ -27,7 +27,7 @@
 		
 	<!-- fonts
    ================================================== -->
-   <link type="text/css" href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Kalam|Permanent+Marker" rel="stylesheet">
 
    <!-- script
    ================================================== -->
@@ -40,10 +40,11 @@
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 
 </head>
-
-<body id="top">
-	{{> header}}
-   	{{{body}}}   
+<body style="padding-top:100px" id="top">
+   {{# unless isLoggedIn}}{{> loginModal}}{{/unless}}
+   {{# if isLoggedIn}}{{> sidebar}}{{/if}}
+   {{> header}}
+   {{{body}}}   
 	{{> footer}}
    <!-- JavaScript
    ================================================== -->

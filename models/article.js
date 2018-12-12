@@ -43,7 +43,7 @@ const articleSchema = new mongoose.Schema({
       ref: 'User'
     }
   }],
-  category:[{type:String,enum:['Lifestyle','Health','News','Other']}]
+  category:[{type:String,enum:['Lifestyle','Health','News','Other'],default:'Other'}]
 })
 
 articleSchema.methods.addComment = function (comment) {

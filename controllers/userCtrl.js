@@ -48,24 +48,33 @@ module.exports = {
 		})
 	},
 	authenticateUser:(req,res,next) => {
+		console.log(JSON.stringify(req.body))
+		let loginSuccessMsg = 'You are now logged in'
+		let loginErrorMsg ='The username or password provided is incorrect'
+		let serverErrorMsg = 'Internal server error'
 		User.findOne({name:req.body.name},(err,user) => {
-			if(err) res.status(500).send('Internal server error')
+			if(err) res.status(500).send(serverErrorMsg)
 			if(user){
 				bcrypt.compare(req.body.password,user.password,(err,result) => {
 					if(err){
-						res.status(500).send('Internal server error')
+						res.status(500).send(serverErrorMsg)
 					}
 					if(result){
-						req.flash('login-message','You are now logged in')
-						req.session.user = {name:user.name,_id:user._id}
+						req.flash('login-message',loginSuccessMsg)
+						req.session.user = {
+							name:user.name,
+							email:user.email,
+							_id:user._id,
+							isAdmin:user.isAdmin,
+							profilePic:user.profilePic
+						}
 						next()
 					}else{
-						res.send('The username or password provided is incorrect')
+						res.status(200).json({error:loginErrorMsg})
 					}
 				  })
 			}else{
-				req.flash('login-message','The username or password provided is incorrect')
-				next()
+				res.status(200).json({error:loginErrorMsg})
 			}
 		})
 	},
@@ -81,13 +90,15 @@ module.exports = {
 		})
 	},
 	getUserArticles:(req,res,next) => {
-		User.find({name:req.params.name})
+		let query =  req.session.user ? req.session.user.name : req.params.name
+		User.find({name:query},{articles:1})
 		.populate('articles')
 		.exec((err,articles) => {
 			if(err) throw err
 			if(req.query.json){
 				res.status(200).json({articles})
 			}
+			res.locals.posts = articles
 			next()
 		})
 	},
@@ -101,5 +112,30 @@ module.exports = {
 					res.status(500).send('Internal server error')
 				})
 		})
+	},
+	verifyIsAdmin:(req,res,next)=>{
+		if(!!req.session.user){
+			if(req.session.user.isAdmin){
+				next()
+			}else{
+				res.setHeader('Content-Type','text/html')
+				res.send(`
+				<html>
+					<body>
+						<h1>403:Forbidden</h1>
+						<p>You do not have the permissions required</p>
+					</body>
+				<html>`)
+			}
+		}else{
+			res.setHeader('Content-Type','text/html')
+			res.send(`
+			<html>
+				<body>
+					<h1>403:Forbidden</h1>
+					<p>You do not have the permissions required</p>
+				</body>
+			<html>`)
+		}
 	}
 }

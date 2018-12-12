@@ -16,8 +16,13 @@ module.exports = {
             if (err) {
                 throw new Error(err)
             }
-            !articles && console.log('No articles')
-            res.json({articles})
+            !articles && res.json({message:'No articles found'})
+            if(req.query.json){
+                res.json({articles})
+            }
+            res.locals.posts = articles
+            next()
+
         })
     },
     getPaginatedArticles: (req, res, next) => {
