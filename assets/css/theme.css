@@ -243,26 +243,86 @@ span.modal--close-btn:hover {
 }
 
 .stylish-loader {
-  width: 70px!important;
-  height: 70px!important;
-  background: transparent!important;
-  border: 5px solid #f5f5f5!important;
-  border-top-color: indigo!important;
-  border-radius: 50%!important;
-  animation: rotate 1s infinite forwards linear!important;
+  width: 70px;
+  height: 70px;
+  background: transparent;
+  border: 5px solid #f5f5f5;
+  border-top-color: rgb(255, 0, 98);
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  border-radius: 50%;
+  animation: rotate 1s infinite forwards linear;
+  
 }
 
 @keyframes rotate {
   0% {
-    transform: rotate(0deg)!important;
-    border-top-color: purple!important;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    border-top-color: #ff006a;
   }
   50% {
-    transform: rotate(180deg)!important;
-    border-top-color: violet!important;
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    border-top-color:  rgb(255, 187, 0)
   }
   100% {
-    transform: rotate(360deg)!important;
-    border-top-color: indigo!important;
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+    border-top-color: #ff006a
   }
+}
+
+.alert-panel{
+  width:350px;
+  height:50px;
+  z-index:9999;
+  color:white;
+  position:absolute;
+  top:-1000px;
+  left:60%;
+  transform: translate(-50%,0%);
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  user-select: none;
+  padding:10px;
+  border-radius:5px;
+  box-shadow: 0 0 5px black;
+  justify-content: space-evenly;
+  animation: 2s slideDown forwards ease-out;
+  background:linear-gradient(45deg,#8b193f,#cf1251,#e91e63,#ff006a,rgb(255, 187, 0));
+}
+
+.alert-panel--text{
+  margin-top:-2px;
+  font-family: 'Permanent Marker',sans-serif;
+  font-size:15px;
+  font-weight:200;
+}
+
+.alert-panel--icon,.alert-panel--close{
+  cursor: pointer;
+  margin-top:2px;
+  font-size:25px;
+}
+
+.alert-panel--close{
+  margin-left:30px;
+}
+
+.alert-panel-inactive{
+  animation:slideUp 2s forwards;
+}
+
+@keyframes slideDown {
+  0%{top:-1000px}
+  100%{top:15%}
+}
+
+@keyframes slideUp {
+  0%{top:15%}
+  100%{top:-1000px}
 }

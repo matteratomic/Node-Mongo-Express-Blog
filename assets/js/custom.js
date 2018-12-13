@@ -57,6 +57,22 @@
             modalCloseBtn.addEventListener('click', toggleModalState)
             modalWrapper.addEventListener('click', toggleModalState)
             modalLoginButton.addEventListener('click', submitCredentials)
+
+            if(modalWrapper.classList.contains('wrapper-active')){
+                window.addEventListener('keydown',function(e){
+                    e.stopPropagation()
+                    if(e.keyCode === 13){
+                        modalLoginButton.addEventListener('click', submitCredentials)
+                    }
+                })
+            }else{
+                window.removeListener('keydown',function(e){
+                    e.stopPropagation()
+                    if(e.keyCode === 13){
+                        modalLoginButton.addEventListener('click', submitCredentials)
+                    }
+                })
+            }
         
             function submitCredentials() {
                 let name = usernameInput.value
@@ -99,6 +115,116 @@
             }
     })
 })();
+
+
+(function searchScript(){
+    window.addEventListener('DOMContentLoaded',function(){
+       if(document.querySelector('.dashboard')){
+        let searchBar = document.querySelector('input#dashboard-search')
+        let container = document.querySelector('#articles')
+        var loader = document.querySelector('#loader-wrapper')
+        searchForArticle('',populateArticleContainer)
+
+        searchBar.onkeyup = function(e){
+            loader.classList.add('wrapper-active')
+            container.innerHTML = ''
+            let searchTerm = e.target.value
+                searchForArticle(searchTerm,populateArticleContainer)
+        }
+
+
+        function populateArticleContainer(results){
+                results.forEach((post)=>{
+                    container.innerHTML += `
+                    <div class="article-item">
+                            <p id="article-title">${post.title}</p>
+                            <p id="article-description">${post.description}</p>
+                            <p id="article-published-date">${post.publishedDate}</p>
+                            <p id="article-author">You</p>
+                            <div class="stylish-row-group">
+                                <a href="/dashboard/editor"><div class="stylish-tag">EDIT</div></a>
+                                <div id="delete-article" data-article-id=${post._id} class="stylish-tag" style="background-color: #E91E63!important;">DELETE</div>
+                            </div>
+                </div>
+                    `
+                })
+                addListeners()
+        }
+        
+        function addListeners(){
+
+            loader.classList.remove('wrapper-active')
+
+            var toggleAlertModalState = function(articleId = null){
+                alertModal.classList.toggle('modal-active')
+                alertModalWrapper.classList.toggle('wrapper-active')
+                
+                if(articleId){
+                    console.log('Deleting',articleToDeleteId)
+                    deleteArticle(articleId,(message)=>{
+                        articleToDeleteId = ''
+                        alert(message)
+                        window.location.reload()
+                    })
+                }
+            }
+
+            var alertModal = document.querySelector('#alert-modal')
+            var alertModalWrapper = document.querySelector('#alert-modal-wrapper.--wrapper')
+            var alertModalCloseBtn = document.querySelector('#alert-modal--closeBtn')
+
+            var alertModalYes = document.querySelector('#alert-modal-yes')
+            var alertModalNo = document.querySelector('#alert-modal-no')
+            
+            var alertModalCloseBtn = document.querySelector('#alert-modal--closeBtn')
+
+            var articleToDeleteId = ''
+
+            alertModal.addEventListener('click', e => e.stopPropagation())
+            
+            alertModalCloseBtn.addEventListener('click', toggleAlertModalState)
+            alertModalWrapper.addEventListener('click', toggleAlertModalState)
+            alertModalNo.addEventListener('click', toggleAlertModalState)
+            
+            alertModalYes.addEventListener('click', ()=>{toggleAlertModalState(articleToDeleteId)})
+          
+            setTimeout(()=>{
+                Array.from(document.querySelectorAll('#delete-article')).forEach( t => t.onclick = (e)=> {
+                    articleToDeleteId = e.target.dataset.articleId
+                    console.log('Triggering modal',articleToDeleteId)
+                    toggleAlertModalState()
+                })           
+            },0)
+
+        }
+        function searchForArticle(searchTerm,cb){
+            fetch(`/search?q=${searchTerm}`)
+                .then(res => res.json())
+                    .then((json)=>{
+                        cb(json.results)
+                    }).catch(err => console.log(err))
+        }
+
+        function deleteArticle(articleId,cb){
+            fetch(`/api/article/delete/${articleId}`)
+                .then(res => res.json())
+                    .then((json)=>{
+                        cb(json.message)
+                    }).catch(err => console.log(err))
+        }
+       }
+    })
+})()
+
+(function alertPanelScript(){
+    var alertPanel = document.querySelector('.alert-panel')
+    var alertPanelCloseBtn = document.querySelector('.alert-panel--close')
+    alertPanelCloseBtn.addEventListener('click',toggleAlertPanelState)
+
+    function toggleAlertPanelState(){
+        alertPanel.classList.add('alert-panel-inactive')
+    }
+})()
 
 (function sidebarScript() {
     if(document.querySelector('.sidebar')){

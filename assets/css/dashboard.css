@@ -10,12 +10,25 @@
     font-size:24px;
 }
 .dashboard--aside{
-background:#e91e63;
+position:relative;
+background:linear-gradient(45deg,#8b193f,#cf1251,#e91e63,#ff006a,rgb(255, 187, 0));
+background-size:400%;
 padding:20px;
+padding-top:-10000px;
 display:flex;
 flex-direction:column;
 align-items:flex-start;
-justify-content: start
+justify-content: center;
+animation: gradient 8s infinite forwards alternate;
+}
+
+@keyframes gradient{
+    0%{
+        background-position: (0%)
+    }
+    100%{
+        background-position: (100%)
+    }
 }
 
 .dashboard input{
@@ -26,12 +39,27 @@ justify-content: start
     border-radius:5px;
     padding:5px;
 }
-
-.dashboard--aside{
-    position:relative;
-}
 .dashboard--search{
     position:relative
+}
+#dashboard-search{
+    transition:all 1s;
+    color: white!important;
+}
+
+#dashboard-search :focus{
+    box-shadow:0 0 5px rgb(255, 187, 0)!important;
+    color: white!important;
+}
+
+#dashboard-search:blur{
+    box-shadow:0 0 0px rgb(255, 187, 0)!important;
+    color: white!important;
+}
+
+@keyframes rotate{
+    0%{transform:rotate(0deg)}
+    100%{transform: rotate(360deg)}
 }
 .dashboard--search ion-icon {
     position: absolute;
@@ -52,7 +80,9 @@ justify-content: start
 .articles-wrapper{
     padding:80px 40px 10px 70px;
     overflow: scroll;
+    overflow-x: hidden;
     max-height: 100vh;
+    min-height: 100vh;
 }
 .articles-wrapper--header{
     font-family: 'Permanent Marker';
@@ -61,17 +91,33 @@ justify-content: start
     margin-bottom:40px
 }
 
+.articles-wrapper #articles{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500
+}
+
 .article-item{
     display:grid;
     grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
-    border-bottom: 1px black solid;
-    margin-bottom:15px
+    padding:20px 10px;
+    padding-left:20px;
+    align-items:center;
+    box-shadow: 0 0 5px black;
+    margin-bottom:15px;
+    text-align: center;
+    transform: scale(0);
+    animation:1s grow forwards cubic-bezier(0.4, 0, 0.2, 1)
+}
+
+@keyframes grow{
+    0%{transform:scale(0)}
+    100%{transform:scale(1)}
 }
 
 .articles--field-labels{
     display:grid;
     grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
-    margin-bottom:20px 20px
+    margin-bottom:20px
 }
 
 .editor--wrapper{

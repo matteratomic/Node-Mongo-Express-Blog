@@ -52,9 +52,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cookieParser())
 app.use(session({
-  cookie:{
-    maxAge:1.296*10**6
-  },
   secret:'THIS IS A SECRET',
   resave:true,
   saveUninitialized:false,

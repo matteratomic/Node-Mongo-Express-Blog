@@ -1,22 +1,14 @@
 <div class="articles-wrapper">
-    <a><div class="stylish-tag" style="float:right">Add a new post</div></a>
+    <a href="/dashboard/editor"><div class="stylish-tag" style="float:right">Add a new post</div></a>
     <h2 class="articles-wrapper--header">Posts</h2>
+   
     <div class="articles--field-labels">
-        <p>Title</p>
-        <p>Description</p>
-        <p>Published Date</p>
-        <p>Author</p>
+        <p class="stylish-tag">Title</p>
+        <p class="stylish-tag">Description</p>
+        <p class="stylish-tag">Published Date</p>
+        <p class="stylish-tag">Author</p>
     </div>
-    {{# each posts}}
-        <div class="article-item">
-            <p>{{title}}</p>
-            <p>{{description}}</p>
-            <p>{{publishedDate}}</p>
-            <p>{{../user.name}}</p>
-            <div class="stylish-row-group">
-                <a href="/dashboard/editor"><div class="stylish-tag">EDIT</div></a>
-                <div class="stylish-tag" style="background-color: #E91E63!important;">DELETE</div>
-            </div>
+        <div id="articles">
+            <!-- Articles are rendered here after Ajax call -->
         </div>
-    {{/each}}
 </div>

@@ -47,6 +47,10 @@ router.get('/dashboard/editor',userCtrl.verifyIsAdmin,(req,res) => {
   })
 })
 
+router.get('/search',articleCtrl.searchForArticles,(req,res) => {
+  res.status(200).json({results:res.locals.results})
+})
+
 
 router.get('/category', (req, res) => {
   res.render('category', { 

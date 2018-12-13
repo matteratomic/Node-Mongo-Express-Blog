@@ -18,9 +18,9 @@ module.exports = {
             }
             !articles && res.json({message:'No articles found'})
             if(req.query.json){
-                res.json({articles})
+                res.json({results:articles})
             }
-            res.locals.posts = articles
+            res.locals.results = articles
             next()
 
         })
@@ -59,6 +59,21 @@ module.exports = {
             res.locals.post = article
             next()
         })
+    },
+    searchForArticles:(req,res,next)=>{
+        if(req.query.q){
+            Article.find({title:{$regex:req.query.q,$options:'i'}})
+            .exec((err,articles)=>{
+                if (err) {
+                    throw new Error(err)
+                }
+                res.locals.results = articles
+                next()
+
+            })
+        }else{
+            res.redirect('/api/articles?json=true')
+        }
     },
     addArticle: (req, res, next) => {
         console.log('endpoint hit')
@@ -171,13 +186,13 @@ module.exports = {
                 User.findOne({articles:req.params.id},(err,user) => {
                     if(err) throw err
                     if(!user) {
-                        res.send('Article does not have an author')
+                        res.status(200).json({message:'Article does not have an author'})
                     }
                     user.removeArticle(req.params.id).then(()=>{
-                        res.send('Successfully removed the article')
+                        res.status(200).json({message:'The post was successfully deleted'})
                     })
                     .catch((err)=>{
-                        res.status(500).send('Successfully removed the article')
+                        res.status(500).send('Internal server error')
                     })
                 })
             })
