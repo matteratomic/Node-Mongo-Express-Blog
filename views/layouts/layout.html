@@ -27,6 +27,8 @@
 		
 	<!-- fonts
    ================================================== -->
+    <!-- Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
    <link href="https://fonts.googleapis.com/css?family=Kalam|Permanent+Marker" rel="stylesheet">
 
    <!-- script
@@ -42,9 +44,10 @@
 </head>
 <body style="padding-top:100px" id="top">
    {{# unless isLoggedIn}}{{> loginModal}}{{/unless}}
-   {{# if isLoggedIn}}{{> sidebar}}{{/if}}
    {{> header}}
    {{{body}}}   
+   {{#if loginMessage}} {{> alert-panel message=loginMessage}} {{/if}}
+
 	{{> footer}}
    <!-- JavaScript
    ================================================== -->
@@ -52,6 +55,15 @@
      <script src="javascripts/plugins.js"></script>
     <script src="javascripts/main.js"></script>
     <script src="javascripts/custom.js"></script>
+    <script>
+         var alertPanel = document.querySelector('.alert-panel')
+             var alertPanelCloseBtn = document.querySelector('.alert-panel--close')
+             alertPanelCloseBtn.addEventListener('click',toggleAlertPanelState)
+         
+             function toggleAlertPanelState(){
+                 alertPanel.classList.add('alert-panel-inactive')
+             }
+         </script>
 	 <script src="https://unpkg.com/ionicons@4.4.8/dist/ionicons.js"></script>
 
 

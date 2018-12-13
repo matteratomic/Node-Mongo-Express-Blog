@@ -10,7 +10,6 @@ router.get('/',articleCtrl.getPaginatedArticles,(req, res) => {
      currentPage:req.query.page || 1,
      posts:res.locals.posts,
      loginMessage:req.flash('login-message') || null,
-     logoutMessage:req.flash('logout-message') || null,
      isLoggedIn:typeof req.session.user !== 'undefined',
      user:req.session.user || null,})
 })

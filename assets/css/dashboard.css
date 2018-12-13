@@ -47,7 +47,7 @@ animation: gradient 8s infinite forwards alternate;
     color: white!important;
 }
 
-#dashboard-search :focus{
+#dashboard-search :focus {
     box-shadow:0 0 5px rgb(255, 187, 0)!important;
     color: white!important;
 }
@@ -85,10 +85,26 @@ animation: gradient 8s infinite forwards alternate;
     min-height: 100vh;
 }
 .articles-wrapper--header{
+    position:relative;
     font-family: 'Permanent Marker';
     font-weight:400;
     font-size: 40px;
-    margin-bottom:40px
+    margin-bottom:40px;
+    margin-left: 20px;
+}
+
+#article-count{
+    position:absolute;
+    top:-15px;
+    left:12%;
+    color:black;
+    text-align:center;
+    min-width:35px;
+    min-height:35px;
+    border-radius:50%;
+    font-size:20px;
+    padding:5px;
+    background:rgb(255, 187, 0);
 }
 
 .articles-wrapper #articles{
@@ -127,6 +143,23 @@ animation: gradient 8s infinite forwards alternate;
     max-height: 100vh;
     display: grid;
     grid-template-rows: repeat(2,1fr) 2fr
+}
+
+.editor--top-section{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 400px;
+    align-items: center;
+}
+
+.editor--top-section input[type="file"]{
+    opacity: 0;
+    width:0;
+    height:0;
+}
+
+.editor--preview{
+    
 }
 
 .editor--publish-post{

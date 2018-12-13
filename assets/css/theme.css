@@ -199,7 +199,7 @@ span.modal--close-btn:hover {
 .stylish-input {
   outline: none!important;
   background: white!important;
-  font-family: "Kalam"!important;
+  font-family: "Roboto"!important;
   font-size: 20px!important;
   padding: 5px 5px 5px 10px!important;
   margin: 15px!important;
@@ -226,7 +226,7 @@ span.modal--close-btn:hover {
 }
 
 .stylish-input--message {
-  font-family: "Permanent Marker", sans-serif!important;
+  font-family: "Roboto", sans-serif!important;
   margin-top: -5px!important;
 }
 
@@ -282,7 +282,7 @@ span.modal--close-btn:hover {
   color:white;
   position:absolute;
   top:-1000px;
-  left:60%;
+  left:50%;
   transform: translate(-50%,0%);
   display:flex;
   flex-direction:row;

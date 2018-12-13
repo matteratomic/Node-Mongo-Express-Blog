@@ -1,12 +1,75 @@
 
 <div class="editor--wrapper">
-<div class="editor--publish-post stylish-tag">Publish post</div>
-<div class="editor--title">
-<input class="stylish-input" type="text" placeholder="Title of the post">
+<h2 class="articles-wrapper--header">New Post</h2>
+<div id="publish-post-btn" style="transform:scale(1.3)" class="editor--publish-post stylish-tag">Publish post</div>
+
+<section class="editor--top-section">
+       <div>
+        <div class="editor--title">
+                <input id="editor--title-input" class="stylish-input" type="text" placeholder="Title of the post">
+        </div>
+      
+        <div class="editor--description ">
+                 <textarea id="editor--description-input" class="stylish-input" placeholder="A description of the post"></textarea>
+        </div>
+</div>
+        <input style="position:absolute;" id="editor--post-image" accept=".gif,.jpg,.jpeg,.png,.svg" type="file">
+        <img src="" alt="" style="height:50%!important;height: 80%!important;
+        width: 90%!important;" class="stylish-input editor--preview ">
+</section>
+<section>
+        <textarea id="editor" name="editor"></textarea>
+</section>
 </div>
 
-<div class="editor--description ">
-        <textarea class="stylish-input" placeholder="A description of the post"></textarea>
-</div>
-     <textarea id="editor" name="editor"></textarea>
-</div>
+<!-- Editor js -->
+<script src="/javascripts/jodit.min.js"></script>
+<script>
+(function editorScript(){
+var editor = new Jodit('#editor')
+var preview = document.querySelector('.editor--preview')
+var fileInput = document.querySelector('#editor--post-image')
+var titleInput = document.querySelector('#editor--title-input')
+var descriptionInput = document.querySelector('#editor--description-input')
+var publishPostBtn = document.querySelector('#publish-post-btn')
+
+preview.onclick = ()=> {
+    fileInput.click()
+}
+fileInput.onchange = function(){
+        var reader = new FileReader()
+        reader.onload = function(e){
+        let dataURL = e.target.result
+        preview.src = dataURL
+        }
+        reader.readAsDataURL(fileInput.files[0])
+}
+
+publishPostBtn.onclick = function(){
+        var formData = new FormData()
+        if(titleInput.value.trim() && descriptionInput.value.trim() && fileInput.files[0] && editor.value.trim()){
+        formData.append('title',titleInput.value)
+        formData.append('description',descriptionInput.value)
+        formData.append('featuredImage',fileInput.files[0])
+        formData.append('authorID','{{user._id}}')
+        formData.append('type','standard-post')
+        formData.append('text',editor.value)
+
+        fetch('/api/article',{
+                method:'POST',
+                body:formData
+        })
+        .then(res => res.json())
+        .then((json)=>{
+                publishPostBtn.textContent = "update post"
+                alert(json.message)
+        })
+        .catch((err)=>{
+                console.log(err)
+        })
+        }else{
+        alert('Incomplete post data')
+        }
+}
+})()
+</script>

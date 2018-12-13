@@ -33,10 +33,17 @@
 
 </body>
 
-<!-- Editor js -->
-<script src="/javascripts/jodit.min.js"></script>
-<script src="javascripts/custom.js"></script>
 <!-- Dashboard js -->
 <script src="/javascripts/dashboard.js"></script>
+<script>
+var alertPanel = document.querySelector('.alert-panel')
+    var alertPanelCloseBtn = document.querySelector('.alert-panel--close')
+    alertPanelCloseBtn.addEventListener('click',toggleAlertPanelState)
+
+    function toggleAlertPanelState(){
+        alertPanel.classList.add('alert-panel-inactive')
+    }
+</script>
 <script src="https://unpkg.com/ionicons@4.4.8/dist/ionicons.js"></script>
+<script src="/javascripts/custom.js"></script>
 </html>

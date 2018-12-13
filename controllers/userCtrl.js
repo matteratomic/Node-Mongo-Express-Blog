@@ -26,7 +26,7 @@ module.exports = {
 			  })
 		}},
 	getAllUsers: (req,res,next) => {
-		User.find({})
+		User.find({},{password:-1})
 		.populate('articles')
 		.exec((err,users)=>{
 			if (err) throw err
@@ -37,7 +37,7 @@ module.exports = {
 		})
 	},
 	getUser:(req,res,next) => {
-		User.findOne({name:req.params.name})
+		User.findOne({name:req.params.name},{password:-1})
 		.populate('articles')
 		.exec((err,user)=>{
 			if(err) throw err

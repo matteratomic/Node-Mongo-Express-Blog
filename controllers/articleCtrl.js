@@ -78,16 +78,11 @@ module.exports = {
     addArticle: (req, res, next) => {
         console.log('endpoint hit')
         uploadToCloudinary(req,(body) => {
-            console.log('cloudinary result returned')
-            console.log('cloudinary result returned value is',body.featuredImage)
-          
-                saveArticle(body)
-            
+        saveArticle(body)
             
         })
         
         function saveArticle(obj) {
-            console.log(`object received in saveArticle: ${obj}`)
             new Article(obj).save((err, article) => {
                 if (err) {
                     res.json({ error: err })
@@ -97,7 +92,7 @@ module.exports = {
                         if(err) throw err
                         if(author){
                             author.addArticle(article._id).then(() =>{
-                                res.redirect(`/post?title=${article.title}`)
+                                res.status(200).json({message:'The post was successfully added'})
                             }).catch((err)=>{
                                 throw err
                             })
@@ -109,14 +104,12 @@ module.exports = {
             }) 
         }
         function uploadToCloudinary (req,cb){
-            console.log('Begin cloudinary upload')
             let galleryImageUrls = []
             let body = {}
 
             let form = new formidable.IncomingForm()
 
             form.on('field',(field,value)=>{
-                //console.log('form fields',field,value)
                 body[field] = value
             })
 
@@ -180,19 +173,27 @@ module.exports = {
     },
     deleteArticle:(req,res,next)=>{
         if(req.params.id){
-            Article.findByIdAndDelete({_id:req.params.id},(err)=>{
-                if(err) throw err
-                //Use connect flash for this
-                User.findOne({articles:req.params.id},(err,user) => {
-                    if(err) throw err
-                    if(!user) {
-                        res.status(200).json({message:'Article does not have an author'})
-                    }
-                    user.removeArticle(req.params.id).then(()=>{
-                        res.status(200).json({message:'The post was successfully deleted'})
-                    })
-                    .catch((err)=>{
-                        res.status(500).send('Internal server error')
+            //Better to use a mongoose static
+            Article.findById({_id:req.params.id}).exec((err,article)=>{
+                let fileName = path.basename(article.featuredImage)
+                let match = fileName.match(/(.+)(\..+$)/)
+                cloudinary.uploader.destroy(match[1],(err)=>{
+                    if(err) console.log(err)
+                    Article.findByIdAndDelete({_id:req.params.id},(err)=>{
+                        if(err) throw err
+                        //Use connect flash for this
+                        User.findOne({articles:req.params.id},(err,user) => {
+                            if(err) throw err
+                            if(!user) {
+                                res.status(200).json({message:'Article does not have an author'})
+                            }
+                            user.removeArticle(req.params.id).then(()=>{
+                                res.status(200).json({message:'The post was successfully deleted'})
+                            })
+                            .catch((err)=>{
+                                res.status(500).send('Internal server error')
+                            })
+                        })
                     })
                 })
             })

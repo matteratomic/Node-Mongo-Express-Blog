@@ -1,29 +1,31 @@
 
 (function headerScript() {
     window.addEventListener('DOMContentLoaded', function () {
-        let header = document.querySelector('header')
+        if(document.querySelector('header')){
+            let header = document.querySelector('header')
 
-        if (!!window.location.search) {
-            header.setAttribute('style', 'background:black;box-shadow:0 0 10px black')
-        }
-
-        function scrollHandler() {
-            if (window.scrollY > 300 && window.location.pathname === '/' && !window.location.search) {
+            if (!!window.location.search) {
                 header.setAttribute('style', 'background:black;box-shadow:0 0 10px black')
-            } else {
-                if (!!window.location.search) {
+            }
+    
+            function scrollHandler() {
+                if (window.scrollY > 300 && window.location.pathname === '/' && !window.location.search) {
                     header.setAttribute('style', 'background:black;box-shadow:0 0 10px black')
                 } else {
-                    header.setAttribute('style', 'background:transparent;box-shadow:0 0 10px transparent')
+                    if (!!window.location.search) {
+                        header.setAttribute('style', 'background:black;box-shadow:0 0 10px black')
+                    } else {
+                        header.setAttribute('style', 'background:transparent;box-shadow:0 0 10px transparent')
+                    }
                 }
             }
-        }
-
-        if (window.location.pathname != '/') {
-            window.removeEventListener('scroll', scrollHandler)
-            header.setAttribute('style', 'background:black;box-shadow:0 0 10px black')
-        } else {
-            let scrollListener = window.addEventListener('scroll', scrollHandler, false)
+    
+            if (window.location.pathname != '/') {
+                window.removeEventListener('scroll', scrollHandler)
+                header.setAttribute('style', 'background:black;box-shadow:0 0 10px black')
+            } else {
+                let scrollListener = window.addEventListener('scroll', scrollHandler, false)
+            }
         }
     })
 })();
@@ -40,8 +42,8 @@
 
 (function loginModalScript() {
     window.addEventListener('DOMContentLoaded',function(){
-     
-            let loginModal = document.querySelector('#login-modal')
+     if(document.querySelector('#login-modal-trigger')){
+        let loginModal = document.querySelector('#login-modal')
             let modalWrapper = document.querySelector('#login-modal-wrapper.--wrapper')
             let usernameInput = document.querySelector('#login-modal--username')
             let usernameError = document.querySelector('#login-modal--username-error')
@@ -112,28 +114,35 @@
             function toggleModalState() {
                 loginModal.classList.toggle('modal-active')
                 modalWrapper.classList.toggle('wrapper-active')
-            }
+            }   
+     }
     })
 })();
 
-
 (function searchScript(){
+    var firstLoad = true
     window.addEventListener('DOMContentLoaded',function(){
-       if(document.querySelector('.dashboard')){
-        let searchBar = document.querySelector('input#dashboard-search')
-        let container = document.querySelector('#articles')
+       if(document.querySelector('#articles')){
+        var searchBar = document.querySelector('input#dashboard-search')
+        var container = document.querySelector('#articles')
         var loader = document.querySelector('#loader-wrapper')
+        var postCount = document.querySelector('#article-count')
+        
         searchForArticle('',populateArticleContainer)
 
         searchBar.onkeyup = function(e){
             loader.classList.add('wrapper-active')
             container.innerHTML = ''
-            let searchTerm = e.target.value
+            var searchTerm = e.target.value
                 searchForArticle(searchTerm,populateArticleContainer)
         }
 
-
         function populateArticleContainer(results){
+            if(firstLoad){
+                postCount.textContent = results.length
+                firstLoad = false
+            }
+            if(results.length){
                 results.forEach((post)=>{
                     container.innerHTML += `
                     <div class="article-item">
@@ -149,13 +158,20 @@
                     `
                 })
                 addListeners()
+            }else{
+                container.innerHTML += `
+                    <div class="article-item">
+                            <p id="article-title">No post found</p>
+                </div>`
+                loader.classList.remove('wrapper-active')
+            }
         }
         
         function addListeners(){
 
             loader.classList.remove('wrapper-active')
 
-            var toggleAlertModalState = function(articleId = null){
+            function toggleAlertModalState (articleId = null){
                 alertModal.classList.toggle('modal-active')
                 alertModalWrapper.classList.toggle('wrapper-active')
                 
@@ -216,15 +232,6 @@
     })
 })()
 
-(function alertPanelScript(){
-    var alertPanel = document.querySelector('.alert-panel')
-    var alertPanelCloseBtn = document.querySelector('.alert-panel--close')
-    alertPanelCloseBtn.addEventListener('click',toggleAlertPanelState)
-
-    function toggleAlertPanelState(){
-        alertPanel.classList.add('alert-panel-inactive')
-    }
-})()
 
 (function sidebarScript() {
     if(document.querySelector('.sidebar')){

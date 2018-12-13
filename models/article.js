@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const moment = require('moment')
 
 const articleSchema = new mongoose.Schema({
   title: { type: String,required:true,unique:true},
@@ -25,11 +26,12 @@ const articleSchema = new mongoose.Schema({
   text: { type: String,default:''},
   type:{
     type:String,
-    enum:['video-post','standard-post','gallery-post']
+    enum:['video-post','standard-post','gallery-post'],
+    default:'standard-post'
   },
   publishedDate:{
     type:Date,
-    default:new Date().toDateString()
+    default:moment().format('MMMM DD YYYY')
   },
   author: {
     ref: 'User',

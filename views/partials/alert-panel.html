@@ -3,7 +3,11 @@
         <ion-icon style="color:white" name="checkmark-circle-outline">
         </ion-icon>
     </div>
-    <div class="alert-panel--text">You are now logged in</div>
+    {{#if message}}
+    <div class="alert-panel--text">{{message}}</div>
+    {{else}}
+    <div class="alert-panel--text">This is an alert.</div>
+    {{/if}}
     <div class="alert-panel--close">
             <ion-icon style="color:white" name="close"></ion-icon>
     </div>
