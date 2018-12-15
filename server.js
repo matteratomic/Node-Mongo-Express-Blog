@@ -18,7 +18,7 @@ require('dotenv').config()
 
 const helpers = require('./views/helpers/index')
 const port = parseInt(process.env.PORT, 10) || 3000
-const mongoURL = 'mongodb://localhost:27017/blog-api'
+const mongoURL = process.env.MONGO_URL
 
 //setup cloudinary
 cloudinary.config({
@@ -44,7 +44,7 @@ const db = mongoose.connection
 db.once('open',() =>{
   console.log('CONNECTED TO DATABASE')
 })
-db.on('error',() => console.log('COULD NOT CONNECT TO DATABASE'))
+db.on('error',(err) => console.log('COULD NOT CONNECT TO DATABASE',err))
 
 // setup middleware
 app.use(express.static(path.join(__dirname, 'public')))

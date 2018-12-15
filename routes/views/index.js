@@ -1,17 +1,23 @@
 const router = require('express').Router()
 const userCtrl = require('../../controllers/userCtrl')
 const articleCtrl = require('../../controllers/articleCtrl')
-const cloudinary = require('cloudinary')
 
 
 router.get('/',articleCtrl.getPaginatedArticles,(req, res) => {
   res.render('index',{
      page: 'home',
-     currentPage:req.query.page || 1,
+     currentPage:parseInt(req.query.page,10) || 1,
      posts:res.locals.posts,
+     totalPosts:res.locals.totalPosts,
      loginMessage:req.flash('login-message') || null,
      isLoggedIn:typeof req.session.user !== 'undefined',
      user:req.session.user || null,})
+})
+
+router.get('/home/search',articleCtrl.searchForArticles,(req,res)=>{
+  res.render('search',{
+    results:res.locals.results
+  })
 })
 
 router.post('/login',userCtrl.authenticateUser,(req,res) => {
@@ -39,10 +45,12 @@ router.get('/dashboard',userCtrl.verifyIsAdmin,userCtrl.getUserArticles,(req,res
   })
 })
 
-router.get('/dashboard/editor',userCtrl.verifyIsAdmin,(req,res) => {
+router.get('/dashboard/editor',userCtrl.verifyIsAdmin,articleCtrl.getArticle,(req,res) => {
   res.render('editor',{
     layout:'dashboard.html',
     user:req.session.user || null,
+    post:res.locals.post || null,
+    editMode: res.locals.post ? true : false
   })
 })
 

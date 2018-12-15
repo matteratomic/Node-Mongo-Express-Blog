@@ -3,10 +3,13 @@
 	{{#ifeq currentPage 1}}
    {{> hero-partial}}
    {{/ifeq}}
-   <!-- <div style="margin:100px 0 0 60px;">
-	   <h1 style="font-size:35px;font-family:'Permanent Marker',sans-serif">My Posts</h1>
-   </div> -->
-   
+	
+   <div style="margin:80px 0 0 60px;">
+		{{#if posts}}
+	   <h1 style="font-size:35px;font-family:'Permanent Marker',sans-serif">Featured Posts</h1>
+	   {{/if}}
+   </div>
+ 
    <section id="bricks">
 
    	<div class="row masonry">
@@ -16,49 +19,41 @@
          	<div class="grid-sizer"></div>
          	<div class="brick entry featured-grid animate-this">
          		<div class="entry-content">
-         			<div id="featured-post-slider" class="flexslider">
-			   			<ul class="slides">
-							
-							{{> featured-post-slide 
-									imageUrl="images/thumbs/featured/featured-1.jpg" 
-									author="Naruto Uzumaki" publishDate="January 10, 2019" 
-									title="Minimalism never goes out of style"
-							}}   
-							
-							{{> featured-post-slide 
-									imageUrl="images/thumbs/featured/featured-2.jpg" 
-									author="Danielle Arori"
-									publishDate="January 10, 2019"
-									title="Taking charge of own sexuality towards a better sexual and reproductive health"
-							}}   
-							
-							  {{> featured-post-slide 
-									imageUrl="images/thumbs/featured/featured-3.jpg"
-									author="Danielle Arori"
-									publishDate="January 10, 2019"
-									title="Music Album Cover Designs for Inspiration"
-							   }}   
-								
-				   		</ul> <!-- end slides -->
-				   	</div> <!-- end featured-post-slider -->        			
+					
+					<div id="featured-post-slider" class="flexslider">
+						<ul class="slides">
+						 {{# each posts}}
+						 {{> featured-post-slide 
+								 imageUrl=featuredImage 
+								 author=author.name
+								 publishDate=publishDate
+								 title=title
+								 _id=_id
+
+						 }}   
+						 {{/each}}
+						 
+						</ul> <!-- end slides -->
+					</div> <!-- end featured-post-slider --> 			
          		</div> <!-- end entry content -->         		
 			 </div>
-
+			 {{# if posts}}
 			 {{# each posts}}
 				{{> article-brick 
 					imageUrl=featuredImage
 					title=title
 					description=description
+					_id=_id
 				}}
 			 {{/each}}
-
-			 <!---->{{> gallery-article-brick 
-				title="Workspace Design Trends and Ideas."
-				description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem obcaecati vel sequi eum. Doloremque sequi quas magni, quia quod officiis?"
-				img1="images/thumbs/gallery/work1.jpg" 
-				img2="images/thumbs/gallery/work2.jpg" 
-				img3="images/thumbs/gallery/work3.jpg"
-			}}-->
+			 {{else}}
+			 {{> article-brick 
+				imageUrl='https://media.giphy.com/media/3o85xvmEbFudcz7zUI/giphy.gif'
+				title='No posts found'
+				description="Sorry but no posts were found"
+				center=true
+			}} 
+			 {{/if}}
 
          </div> <!-- end brick-wrapper --> 
 
@@ -69,18 +64,8 @@
 		{{loginMessage}}
 		{{/if}}
    		<nav class="pagination">
-		      <a style="{{# ifeq '1' currentPage}}pointer-events: none {{/ifeq}}" href="{{# ifeq currentPage '2'}} / {{else}} /?page={{minusOne currentPage}} {{/ifeq}}" class="page-numbers prev {{# ifeq currentPage '1'}}inactive{{/ifeq}}">Prev</a>
-		   	<a href="/"  class="page-numbers {{# ifeq currentPage 1}}current{{/ifeq}}">1</a>
-		   	<a href="/?page=2" class="page-numbers {{# ifeq currentPage '2'}}current{{/ifeq}}">2</a>
-			  <a href="/?page=3" class="page-numbers {{# ifeq currentPage '3'}}current{{/ifeq}}">3</a>
-		      <a href="/?page=4" class="page-numbers {{# ifeq currentPage '4'}}current{{/ifeq}}">4</a>
-		      <a href="/?page=5" class="page-numbers {{# ifeq currentPage '5'}}current{{/ifeq}}">5</a>
-		      <a href="/?page=6" class="page-numbers {{# ifeq currentPage '6'}}current{{/ifeq}}">6</a>
-		      <a href="/?page=7" class="page-numbers {{# ifeq currentPage '7'}}current{{/ifeq}}">7</a>
-		      <a href="/?page=8" class="page-numbers {{# ifeq currentPage '8'}}current{{/ifeq}}">8</a>
-		      <a href="/?page=9" class="page-numbers {{# ifeq currentPage '9'}}current{{/ifeq}}">9</a>
-		   	<a style="{{# ifeq '9' currentPage}}pointer-events: none {{/ifeq}}" href="/?page={{plusOne currentPage}}" class="page-numbers next">Next</a>
-	      </nav>
+		{{{getPaginationItems totalPosts currentPage}}}
+		</nav>
 
    	</div>
 

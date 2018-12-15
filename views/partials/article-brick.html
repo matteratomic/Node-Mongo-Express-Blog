@@ -1,7 +1,7 @@
-<article class="brick entry format-standard animate-this">
+<article {{#if center}} style="position:absolute;top:120vh;left:40%;"{{/if}} class="brick entry format-standard animate-this">
     
         <div class="entry-thumb">
-           <a href="single-standard" class="thumb-link">
+           <a href="post?id={{_id}}" class="thumb-link">
                <img src="{{imageUrl}}" alt="building">             
            </a>
         </div>
@@ -10,14 +10,10 @@
             <div class="entry-header">
 
                 <div class="entry-meta">
-                    <span class="cat-links">
-                        {{#each tags}}
-                        <a href="#">{{this}}</a>  
-                        {{/each}}	
+                    <span class="cat-links">	
                     </span>			
                 </div>
-
-                <h1 class="entry-title"><a href="post?title={{title}}">{{title}}</a></h1>
+                <h1 class="entry-title"><a href="post?id={{_id}}">{{title}}</a></h1>
                 
             </div>
                  <div class="entry-excerpt">

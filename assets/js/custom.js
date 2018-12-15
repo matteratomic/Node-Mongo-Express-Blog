@@ -35,7 +35,7 @@
     if(!!document.querySelector('.hero-scroll-down')){
         let scrollDown = document.querySelector('.hero-scroll-down')
         scrollDown.addEventListener('click', function () {
-        window.scrollBy({ top: window.innerHeight - 100, left: 0, behavior: 'smooth' })
+        window.scrollBy({ top: window.innerHeight - 70, left: 0, behavior: 'smooth' })
     })
     }
 })();
@@ -43,7 +43,7 @@
 (function loginModalScript() {
     window.addEventListener('DOMContentLoaded',function(){
      if(document.querySelector('#login-modal-trigger')){
-        let loginModal = document.querySelector('#login-modal')
+            let loginModal = document.querySelector('#login-modal')
             let modalWrapper = document.querySelector('#login-modal-wrapper.--wrapper')
             let usernameInput = document.querySelector('#login-modal--username')
             let usernameError = document.querySelector('#login-modal--username-error')
@@ -53,6 +53,7 @@
             let modalLoginButton = document.querySelector('#login-modal--button')
             let loginModalTrigger = document.querySelector('#login-modal-trigger')
             let modalCloseBtn = document.querySelector('.modal--close-btn')
+            var loader = document.querySelector('#loader-wrapper')
         
             loginModal.addEventListener('click', e => e.stopPropagation())
             loginModalTrigger.addEventListener('click', toggleModalState)
@@ -79,11 +80,11 @@
             function submitCredentials() {
                 let name = usernameInput.value
                 let password = passwordInput.value
-                modalCloseBtn.setAttribute('disabled',true);
+                modalLoginButton.setAttribute('disabled',true);
                 loginError.textContent = '';
                 if(usernameInput.value.trim() && passwordInput.value.trim()){
                 let body = JSON.stringify(({name,password}))
-                
+                loader.classList.add('wrapper-active')
                 fetch('/login',{
                     method:"POST",
                     headers:{
@@ -92,7 +93,8 @@
                     body:body,
                 }).then((res)=>res.json())
                 .then((json)=>{
-                    modalCloseBtn.setAttribute('disabled',false)
+                    loader.classList.remove('wrapper-active')
+                    modalLoginButton.setAttribute('disabled',false)
                     usernameInput.value = ''
                     passwordInput.value = ''
                     if(!!json.error){
@@ -103,6 +105,7 @@
                 })
                 .catch(err => {console.log(err)})
                 }else{
+                    loader.classList.remove('wrapper-active')
                     if(!name.trim()){
                         usernameError.textContent = '*Username field is empty!'
                     }else if(!password.trim()){
@@ -127,7 +130,6 @@
         var container = document.querySelector('#articles')
         var loader = document.querySelector('#loader-wrapper')
         var postCount = document.querySelector('#article-count')
-        
         searchForArticle('',populateArticleContainer)
 
         searchBar.onkeyup = function(e){
@@ -142,6 +144,7 @@
                 postCount.textContent = results.length
                 firstLoad = false
             }
+            container.innerHTML = ''
             if(results.length){
                 results.forEach((post)=>{
                     container.innerHTML += `
@@ -151,7 +154,7 @@
                             <p id="article-published-date">${post.publishedDate}</p>
                             <p id="article-author">You</p>
                             <div class="stylish-row-group">
-                                <a href="/dashboard/editor"><div class="stylish-tag">EDIT</div></a>
+                                <a href="/dashboard/editor?id=${post._id}"><div class="stylish-tag">EDIT</div></a>
                                 <div id="delete-article" data-article-id=${post._id} class="stylish-tag" style="background-color: #E91E63!important;">DELETE</div>
                             </div>
                 </div>
@@ -171,17 +174,19 @@
 
             loader.classList.remove('wrapper-active')
 
-            function toggleAlertModalState (articleId = null){
-                alertModal.classList.toggle('modal-active')
-                alertModalWrapper.classList.toggle('wrapper-active')
-                
-                if(articleId){
+            function toggleAlertModalState (articleId = null){ 
+                if(articleId && typeof articleId === "string"){
                     console.log('Deleting',articleToDeleteId)
+                    loader.classList.add('wrapper-active')
                     deleteArticle(articleId,(message)=>{
                         articleToDeleteId = ''
+                        loader.classList.remove('wrapper-active')
                         alert(message)
                         window.location.reload()
                     })
+                }else{
+                    alertModal.classList.toggle('modal-active')
+                    alertModalWrapper.classList.toggle('wrapper-active')
                 }
             }
 
@@ -214,19 +219,27 @@
 
         }
         function searchForArticle(searchTerm,cb){
+            loader.classList.add('wrapper-active')
             fetch(`/search?q=${searchTerm}`)
                 .then(res => res.json())
                     .then((json)=>{
+                        loader.classList.remove('wrapper-active')
                         cb(json.results)
-                    }).catch(err => console.log(err))
+                        loader.classList.remove('wrapper-active')
+                    }).catch(err => alert('An error occurred'))
         }
 
         function deleteArticle(articleId,cb){
+            loader.classList.add('wrapper-active')
             fetch(`/api/article/delete/${articleId}`)
                 .then(res => res.json())
                     .then((json)=>{
+                        loader.classList.remove('wrapper-active')
                         cb(json.message)
-                    }).catch(err => console.log(err))
+                    }).catch((err)=>{
+                        loader.classList.remove('wrapper-active')
+                        alert('An error occured when deleting the post')
+                    })
         }
        }
     })

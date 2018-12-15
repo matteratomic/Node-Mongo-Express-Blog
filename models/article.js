@@ -2,23 +2,23 @@ const mongoose = require('mongoose')
 const moment = require('moment')
 
 const articleSchema = new mongoose.Schema({
-  title: { type: String,required:true,unique:true},
+  title: { type: String,required:true},
   description: { type: String,required:true},
   featuredImage: { 
     type: String,
-    default:null,
+    default:'http://cdn.onlinewebfonts.com/svg/img_148071.png',
     required:function(){
       return this.type === 'standard-post'
     }
   },
   featuredVideo:{
-    type:String,default:null,
+    type:String,default:'http://cdn.onlinewebfonts.com/svg/img_148071.png',
     required:function(){
       return this.type === 'video-post'
     }},
   featuredGalleryImages:{
     type:Array,
-    default:null,
+    default:'http://cdn.onlinewebfonts.com/svg/img_148071.png',
     required:function(){
       return this.type === 'gallery-post'
     }

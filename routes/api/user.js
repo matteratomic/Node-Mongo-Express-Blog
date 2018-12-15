@@ -3,7 +3,7 @@ const userCtrl = require('../../controllers/userCtrl')
 
 module.exports = router => {
    // Route to add a user
-  router.post('/user',userCtrl.verifyIsAdmin,userCtrl.addUser)
+  router.post('/user',userCtrl.addUser)
    // Route to get a user
   router.get('/user/:name',userCtrl.getUser)
   // Route to get all users

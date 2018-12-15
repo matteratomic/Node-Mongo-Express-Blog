@@ -7,7 +7,7 @@
    <!--- basic page needs
    ================================================== -->
    <meta charset="utf-8">
-	<title>The Blog</title>
+	<title>Sexed</title>
 	<meta name="description" content="A reproductive health blog">  
 	<meta name="author" content="Danielle Mwende Aroro">
 
@@ -44,6 +44,7 @@
 </head>
 <body style="padding-top:100px" id="top">
    {{# unless isLoggedIn}}{{> loginModal}}{{/unless}}
+   {{> loader}}
    {{> header}}
    {{{body}}}   
    {{#if loginMessage}} {{> alert-panel message=loginMessage}} {{/if}}
