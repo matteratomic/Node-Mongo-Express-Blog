@@ -1,12 +1,15 @@
 <!-- masonry
    ================================================== -->
 	{{#ifeq currentPage 1}}
+	{{#if hideHero}}
+	{{else}}
    {{> hero-partial}}
+   {{/if}}
    {{/ifeq}}
-	
+   
    <div style="margin:80px 0 0 60px;">
 		{{#if posts}}
-	   <h1 style="font-size:35px;font-family:'Permanent Marker',sans-serif">Featured Posts</h1>
+	   <h1 style="font-size:35px;font-family:'Permanent Marker',sans-serif">{{# if hideHero}}Search Results{{else}}Featured Posts{{/if}}</h1>
 	   {{/if}}
    </div>
  

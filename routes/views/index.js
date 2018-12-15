@@ -6,6 +6,7 @@ const articleCtrl = require('../../controllers/articleCtrl')
 router.get('/',articleCtrl.getPaginatedArticles,(req, res) => {
   res.render('index',{
      page: 'home',
+     hideHero:res.locals.hideHero,
      currentPage:parseInt(req.query.page,10) || 1,
      posts:res.locals.posts,
      totalPosts:res.locals.totalPosts,
@@ -55,7 +56,11 @@ router.get('/dashboard/editor',userCtrl.verifyIsAdmin,articleCtrl.getArticle,(re
 })
 
 router.get('/search',articleCtrl.searchForArticles,(req,res) => {
-  res.status(200).json({results:res.locals.results})
+  res.status(200).json(
+    {
+    results:res.locals.results,
+    hideHero:true
+  })
 })
 
 

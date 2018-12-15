@@ -52,7 +52,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cookieParser())
 app.use(session({
-  secret:'THIS IS A SECRET',
+  secret:'process.env.COOKIE_SECRET',
   resave:true,
   saveUninitialized:false,
   store: new MongoStore({mongooseConnection:db})

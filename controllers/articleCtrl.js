@@ -114,6 +114,7 @@ module.exports = {
             Article.find(query).count().exec((err,totalPosts)=>{
                 res.locals.posts = articles
                 res.locals.totalPosts = totalPosts
+                req.query.s ? res.locals.hideHero = true : null
                 next()
             })            
         })
