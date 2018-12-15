@@ -44,7 +44,7 @@ const db = mongoose.connection
 db.once('open',() =>{
   console.log('CONNECTED TO DATABASE')
 })
-db.on('error',(err) => console.log('COULD NOT CONNECT TO DATABASE',err))
+db.on('error',(err) => console.log('The error is here',err))
 
 // setup middleware
 app.use(express.static(path.join(__dirname, 'public')))
